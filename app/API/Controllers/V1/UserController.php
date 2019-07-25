@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use App\API\Controllers\BaseController;
 use App\Http\Requests\ViewUser;
 use App\Http\Requests\ViewAllUsers;
-use App\Http\Requests\StoreUser;
+use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateUser;
-use App\Http\Requests\DestroyUser;
+use App\Http\Requests\DeleteUser;
+use App\Http\Requests\AssignRole;
 use App\API\Resources\V1\UserResource;
 use App\API\Resources\V1\UserCollection;
 
@@ -31,7 +32,7 @@ class UserController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUser $request)
+    public function store(CreateUser $request)
     {
         return new UserResource(User::create($request->validated()));
     }
@@ -67,13 +68,20 @@ class UserController extends BaseController
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyUser $request, User $user)
+    public function destroy(DeleteUser $request, User $user)
     {
         $user->delete();
 
         return response()->json([
             'message' => 'The resource deleted successfully.'
         ]);
+    }
+
+    public function assignRole(AssignRole $request, User $user)
+    {
+        $user->assignRole($request->input('role'));
+
+        return new UserResource($user);
     }
 }
 

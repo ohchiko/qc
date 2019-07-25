@@ -10,18 +10,23 @@ class Work extends Model
         'batch', 'purchase_id', 'description', 'status', 'user_id',
     ];
 
-    protected function purchase()
+    public function purchase()
     {
         return $this->hasOne('App\Purchase');
     }
 
-    protected function products()
+    public function products()
     {
         return $this->hasMany('App\Product');
     }
 
-    protected function materials()
+    public function materials()
     {
         return $this->hasManyThrough('App\Material', 'App\Product');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

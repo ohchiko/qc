@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUser extends FormRequest
+class UpdatePurchase extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,15 @@ class StoreUser extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('create user');
+        if ($this->user()->id === $this->route('purchase')->user->id) {
+            return true;
+        }
+
+        if ($this->user()->can('update purchase')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -24,9 +32,9 @@ class StoreUser extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|min:3',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:6|confirmed'
+            'cust_name' => 'string|min:3',
+            'description' => 'string',
+            'est_delivery' => 'date',
         ];
     }
 }

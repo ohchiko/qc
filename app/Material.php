@@ -10,8 +10,13 @@ class Material extends Model
         'name', 'batch', 'user_id',
     ];
 
-    protected function product()
+    public function product()
     {
-        return $this->belongsTo('App\Product');
+        return $this->belongsToMany('App\Product', 'product_material', 'product_id', 'material_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

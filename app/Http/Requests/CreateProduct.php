@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DestroyUser extends FormRequest
+class CreateProduct extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,11 +13,7 @@ class DestroyUser extends FormRequest
      */
     public function authorize()
     {
-        if ($this->user()->can('delete user')) {
-            return true;
-        }
-
-        if ($this->user()->id === $this->route('user')->id) {
+        if ($this->user()->can('create product')) {
             return true;
         }
 
@@ -32,7 +28,8 @@ class DestroyUser extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|min:3',
+            'materials' => 'required|array',
         ];
     }
 }

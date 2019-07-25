@@ -14,13 +14,18 @@ class Purchase extends Model
         'est_delivery' => 'datetime',
     ];
 
-    protected function products()
+    public function products()
     {
         return $this->hasManyThrough('App\Product', 'App\Work');
     }
 
-    protected function work()
+    public function work()
     {
         return $this->hasOne('App\Work');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }
