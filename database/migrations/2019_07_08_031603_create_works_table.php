@@ -16,7 +16,7 @@ class CreateWorksTable extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('batch', 20)->unique();
-            $table->unsignedBigInteger('purchase_id');
+            $table->unsignedBigInteger('purchase_id')->nullable();
             $table->string('description', 100)->nullable();
             $table->enum('status', ['process', 'finish', 'cancel'])->default('process');
             $table->unsignedBigInteger('user_id');
